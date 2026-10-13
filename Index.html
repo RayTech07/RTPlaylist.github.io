@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10152b">
+<title>RT PLAY — Music Playlist</title>
+<link rel="stylesheet" href="Index.css">
+<script src="Index.js" defer></script>
+</head>
+
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">♫</div>
+      RT PLAY<span style="color:var(--accent)">.</span>
+    </div>
+    <div class="top-note">Your music, your queue. Built with arrays.</div>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div style="width:100%">
+        <div class="side-label">LIBRARY</div>
+        <div class="nav-item active" id="navAll">▦ &nbsp; My playlist</div>
+        <div class="nav-item" id="navLiked">♡ &nbsp; Liked songs</div>
+        <div class="nav-item" id="navRecent">◷ &nbsp; Recently added</div>
+      </div>
+
+      <div class="side-tip">
+        <strong>Quick tip</strong>
+        Add audio files from your device or drag them into the upload area.
+      </div>
+    </aside>
+
+    <main>
+
+      <section class="hero">
+        <div class="eyebrow">Your personal sound space</div>
+        <h1>Music for<br>every moment.</h1>
+        <p>Build your own playlist, play local audio, find tracks instantly, and control what comes next.</p>
+
+        <div class="hero-actions">
+          <button class="primary" id="heroPlay">▶ Play playlist</button>
+          <button class="secondary" id="heroAdd">＋ Add music</button>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h2 id="listHeading">Your playlist</h2>
+            <p id="listSub">Add songs to start listening.</p>
+          </div>
+
+          <div class="stats">
+            <span class="pill" id="songCount">0 tracks</span>
+            <span class="pill" id="totalTime">0 min total</span>
+          </div>
+        </div>
+
+        <div class="tools">
+          <div class="search-wrap">
+            <input id="search" class="search" type="search"
+              placeholder="Search songs or artists..." aria-label="Search playlist">
+          </div>
+
+          <button class="secondary" id="shuffleAll">⤨ Shuffle</button>
+          <button class="secondary" id="clearList">Clear</button>
+        </div>
+
+        <div class="extra-tools">
+          <select class="playlist-select" id="playlistSelect">
+            <option value="default">My playlist</option>
+          </select>
+
+          <input class="mini-input" id="newPlaylistName"
+            placeholder="New playlist name">
+
+          <button class="secondary" id="createPlaylist">＋ New playlist</button>
+          <button class="secondary" id="savePlaylist">Save</button>
+          <button class="secondary" id="exportPlaylist">Export</button>
+          <button class="secondary" id="importPlaylist">Import</button>
+          <button class="secondary" id="themeToggle">☼ Theme</button>
+
+          <input id="playlistFile" type="file" accept=".json,application/json" hidden>
+        </div>
+
+        <label class="upload-zone" id="dropZone" for="fileInput">
+          <span style="font-size:24px">⇧</span>
+          <span>
+            <strong>Choose audio files</strong> or drag and drop them here
+            <br>
+            <small>MP3, WAV, M4A, OGG and other supported audio formats</small>
+          </span>
+        </label>
+
+        <input id="fileInput" type="file"
+          accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac,.opus"
+          multiple hidden>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>TITLE</th>
+                <th>DATE ADDED</th>
+                <th>TIME</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="trackRows"></tbody>
+          </table>
+
+          <div class="empty" id="emptyState">
+            <div class="big">♫</div>
+            <strong>Your playlist is waiting.</strong>
+            <br>
+            Upload audio files to create your own music library.
+          </div>
+        </div>
+
+        <p class="footer-note">
+          Audio files are selected from your device and are not uploaded to a server.
+          Browser security may require you to select the files again after reopening the page.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="player">
+    <div class="now-playing">
+      <div class="now-cover" id="nowCover">♫</div>
+
+      <div style="min-width:0">
+        <div class="now-title" id="nowTitle">Nothing playing</div>
+        <div class="now-artist" id="nowArtist">Choose a track to begin</div>
+      </div>
+
+      <button class="icon-btn" id="likeCurrent" aria-label="Like current song">♡</button>
+    </div>
+
+    <div class="controls">
+      <div class="control-buttons">
+        <button class="control" id="shuffleBtn" title="Shuffle">⤨</button>
+        <button class="control" id="prevBtn" title="Previous track">◀◀</button>
+        <button class="play" id="playBtn" title="Play or pause">▶</button>
+        <button class="control" id="nextBtn" title="Next track">▶▶</button>
+        <button class="control" id="repeatBtn" title="Repeat">↻</button>
+      </div>
+
+      <div class="progress-row">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="1000" value="0">
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="volume">
+      <span>♫</span>
+      <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8">
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+  <audio id="audio" preload="metadata"></audio>
+
+</div>
+</body>
+</html>
